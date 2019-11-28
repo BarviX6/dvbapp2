@@ -874,6 +874,8 @@ data/Makefile
 data/fonts/Makefile
 data/keymaps/Makefile
 data/spinner/Makefile
+data/displaytext/Makefile
+data/displaydualtext/Makefile
 data/7segment/Makefile
 data/7segment/ChannelNumber/Makefile
 data/clock220/Makefile
