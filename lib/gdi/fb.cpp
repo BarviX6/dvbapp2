@@ -209,6 +209,7 @@ int fbClass::showConsole(int state)
 
 int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 {
+	if (fbFd < 0) return -1;
 #if defined(__sh__)
 	xRes=nxRes;
 	yRes=nyRes;
@@ -335,6 +336,7 @@ int fbClass::waitVSync()
 
 void fbClass::blit()
 {
+	if (fbFd < 0) return;
 #if defined(__sh__)
 	int modefd=open("/proc/stb/video/3d_mode", O_RDWR);
 	char buf[16] = "off";
@@ -409,7 +411,7 @@ void fbClass::blit()
 		{
 			eDebug("[fb] STMFBIO_BLT %m");
 		}
-	
+
 	}
 
 	if (ioctl(fbFd, STMFBIO_SYNC_BLITTER) < 0)
@@ -577,4 +579,3 @@ void fbClass::setFBdiff(int top, int left, int right, int bottom)
 	bottomDiff = bottom;
 }
 #endif
-

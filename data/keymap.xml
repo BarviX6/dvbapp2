@@ -166,20 +166,27 @@
 	</map>
 
 	<map context="InfobarChannelSelection">
-		<key id="KEY_LEFT" mapto="keyLeft" flags="mr" />
-		<key id="KEY_RIGHT" mapto="keyRight" flags="mr" />
-		<key id="KEY_UP" mapto="keyUp" flags="mr" />
-		<key id="KEY_DOWN" mapto="keyDown" flags="mr" />
-		<key id="KEY_PREVIOUS" mapto="historyBack" flags="mr" />
-		<key id="KEY_NEXT" mapto="historyNext" flags="mr" />
-		<key id="KEY_BACK" mapto="historyBack" flags="b" />
-		<key id="KEY_FORWARD" mapto="historyNext" flags="mr" />
-		<key id="KEY_ARCHIVE" mapto="historyBack" flags="mr" />
-		<key id="KEY_CHANNELUP" mapto="keyChannelUp" flags="m" />
-		<key id="KEY_CHANNELDOWN" mapto="keyChannelDown" flags="m" />
-		<key id="BTN_0" mapto="zapUp" flags="mr" />
-		<key id="BTN_1" mapto="zapDown" flags="mr" />
-		<!--key id="KEY_SAT" mapto="openSatellites" flags="m" /-->
+		<key id="KEY_LEFT" mapto="LeftPressed" flags="b"/>
+		<key id="KEY_RIGHT" mapto="RightPressed" flags="b"/>
+		<key id="KEY_UP" mapto="switchChannelUp" flags="b"/>
+		<key id="KEY_DOWN" mapto="switchChannelDown" flags="b"/>
+		<key id="KEY_UP" mapto="switchChannelUpLong" flags="l"/>
+		<key id="KEY_DOWN" mapto="switchChannelDownLong" flags="l"/>
+		<key id="KEY_BACK" mapto="historyBack" flags="mr"/>
+		<key id="KEY_FORWARD" mapto="historyNext" flags="mr"/>
+		<key id="KEY_CHANNELUP" mapto="ChannelPlusPressed" flags="b"/>
+		<key id="KEY_CHANNELDOWN" mapto="ChannelMinusPressed" flags="b"/>
+		<key id="KEY_CHANNELUP" mapto="ChannelPlusPressedLong" flags="l"/>
+		<key id="KEY_CHANNELDOWN" mapto="ChannelMinusPressedLong" flags="l"/>
+		<key id="BTN_0" mapto="zapUp" flags="mr"/>
+		<key id="BTN_1" mapto="zapDown" flags="mr"/>
+		<key id="KEY_SAT" mapto="openSatellites" flags="m"/>
+		<key id="KEY_FAVORITES" mapto="openBouquets" flags="m"/>
+	</map>
+
+	<map context="InfobarZoomActions">
+		<key id="KEY_ZOOM" mapto="ZoomInOut" flags="b"/>
+		<key id="KEY_ZOOM" mapto="ZoomOff" flags="l"/>
 	</map>
 
 	<map context="InfobarHDMIActions">
@@ -1049,10 +1056,38 @@
 		<key id="KEY_F2" mapto="f2_long" flags="l"/>
 		<key id="KEY_F3" mapto="f3" flags="b"/>
 		<key id="KEY_F3" mapto="f3_long" flags="l"/>
-		<key id="KEY_F4" mapto="f4" flags="b"/>
-		<key id="KEY_F4" mapto="f4_long" flags="l"/>
-		<key id="KEY_F6" mapto="f6" flags="b"/>
-		<key id="KEY_F6" mapto="f6_long" flags="l"/>
+		<key id="KEY_VMODE" mapto="vmode" flags="b"/>
+		<key id="KEY_VMODE" mapto="vmode_long" flags="l"/>
+		<key id="KEY_SLEEP" mapto="sleep" flags="b"/>
+		<key id="KEY_SLEEP" mapto="sleep_long" flags="l"/>
+		<key id="KEY_SAT" mapto="sat" flags="b" />
+		<key id="KEY_SAT" mapto="sat_long" flags="l" />
+		<key id="KEY_TVSAT" mapto="tvsat" flags="b"/>
+		<key id="KEY_TVSAT" mapto="tvsat_long" flags="l"/>
+		<key id="KEY_PICASA" mapto="picasa" flags="b"/>
+		<key id="KEY_PICASA" mapto="picasa" flags="l"/>
+		<key id="KEY_SHOUTCAST" mapto="shoutcast" flags="b"/>
+		<key id="KEY_SHOUTCAST" mapto="shoutcast" flags="l"/>
+		<key id="KEY_YOUTUBE" mapto="youtube" flags="b"/>
+		<key id="KEY_YOUTUBE" mapto="youtube" flags="l"/>
+		<key id="KEY_SPARK" mapto="spark" flags="b"/>
+		<key id="KEY_SPARK" mapto="spark" flags="l"/>
+		<key id="KEY_FIND" mapto="find" flags="b"/>
+		<key id="KEY_FIND" mapto="find" flags="l"/>
+		<key id="KEY_PLAYMODE" mapto="playmode" flags="b"/>
+		<key id="KEY_PLAYMODE" mapto="playmode_long" flags="l"/>
+		<key id="KEY_FILE" mapto="file" flags="b"/>
+		<key id="KEY_FILE" mapto="file" flags="l"/>
+		<key id="KEY_USB" mapto="usb" flags="b"/>
+		<key id="KEY_USB" mapto="usb_long" flags="l"/>
+		<key id="KEY_PORTAL" mapto="portal" flags="b"/>
+		<key id="KEY_PORTAL" mapto="portal_long" flags="l"/>
+		<key id="KEY_SLOW" mapto="slow" flags="b"/>
+		<key id="KEY_SLOW" mapto="slow" flags="l"/>
+		<key id="KEY_FAST" mapto="fast" flags="b"/>
+		<key id="KEY_FAST" mapto="fast" flags="l"/>
+		<key id="KEY_RECALL" mapto="recall" flags="b"/>
+		<key id="KEY_RECALL" mapto="recall" flags="l"/>
 		<key id="KEY_AUX" mapto="HDMIin" flags="b"/>
 		<key id="KEY_AUX" mapto="HDMIin_long" flags="l"/>
 		<key id="KEY_ZOOM" mapto="zoom" flags="b"/>

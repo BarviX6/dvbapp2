@@ -722,7 +722,17 @@ def InitAVSwitch():
 				f.close()
 			except:
 				pass
-		config.av.bypass_edid_checking = ConfigYesNo(default=True)
+		if about.getChipSetString() in ('7111'):
+			config.av.bypass_edid_checking = ConfigSelection(choices={
+					"00000000": _("off"),
+					"00000001": _("on")},
+					default = "00000001")
+		else:
+			config.av.bypass_edid_checking = ConfigSelection(choices={
+					"00000000": _("off"),
+					"00000001": _("on")},
+					default = "00000000")
+
 		config.av.bypass_edid_checking.addNotifier(setEDIDBypass)
 	else:
 		config.av.bypass_edid_checking = ConfigNothing()
