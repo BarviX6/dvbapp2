@@ -244,8 +244,6 @@ class EventViewBase:
 		self["epg_description"].setText(text)
 		self["FullDescription"].setText(extended)
 
-		self["summary_description"].setText(extended)
-
 		beginTimeString = event.getBeginTimeString()
 
 		if not beginTimeString:
