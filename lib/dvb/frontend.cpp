@@ -1244,6 +1244,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	if (strstr(m_description, "STV090x Multistandard")) // FULAN
 	{
 		ret = (int)(snr / 32.768);
+		sat_max = 2000;
 	}
 	else if (!strcmp(m_description, "AVL2108")) // ET9000
 	{
