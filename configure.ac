@@ -883,8 +883,6 @@ data/clock400/Makefile
 data/clock400s/Makefile
 data/clock480/Makefile
 data/clock800/Makefile
-data/displaytext/Makefile
-data/displaydualtext/Makefile
 data/display96/Makefile
 data/display128/Makefile
 data/display128dm/Makefile

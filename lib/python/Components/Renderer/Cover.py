@@ -77,7 +77,6 @@ class Cover(Renderer):
                 self.instance.setPixmap(ptr)
                 self.instance.show()
             del self.picload
-        return
 
     def findCover(self, path):
         fpath = p1 = p2 = p3 = ''

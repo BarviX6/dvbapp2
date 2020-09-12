@@ -57,7 +57,6 @@ class spaSysInfo(Poll, Converter, object):
             self.poll_interval = 10000
             self.type = self.NET
             self.poll_enabled = True
-        return
 
     def doSuspend(self, suspended):
         pass

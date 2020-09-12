@@ -258,6 +258,8 @@ public:
 	std::string getFrontendCapabilities(int index);
 	void setFrontendType(int index, const char *type, bool append=false);
 	int getFrontendType(int index);
+protected:
+	void initDemux(int num_demux);	
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<eDVBResourceManager>, eDVBResourceManager);
 SWIG_EXTEND(ePtr<eDVBResourceManager>,

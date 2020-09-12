@@ -1,127 +1,126 @@
 from ConditionalWidget import ConditionalWidget
 from GUIComponent import GUIComponent
-
 from enigma import ePixmap, eTimer
-
 from Tools.Directories import resolveFilename, fileExists, SCOPE_CURRENT_SKIN, SCOPE_CURRENT_LCDSKIN
 from os import path
 from skin import loadPixmap
 
 class Pixmap(GUIComponent):
-	GUI_WIDGET = ePixmap
+    GUI_WIDGET = ePixmap
 
-	def getSize(self):
-		s = self.instance.size()
-		return s.width(), s.height()
+    def getSize(self):
+        s = self.instance.size()
+        return (s.width(), s.height())
+
 
 class PixmapConditional(ConditionalWidget, Pixmap):
-	def __init__(self, withTimer = True):
-		ConditionalWidget.__init__(self)
-		Pixmap.__init__(self)
+
+    def __init__(self, withTimer = True):
+        ConditionalWidget.__init__(self)
+        Pixmap.__init__(self)
+
 
 class MovingPixmap(Pixmap):
-	def __init__(self):
-		Pixmap.__init__(self)
 
-		self.moving = False
+    def __init__(self):
+        Pixmap.__init__(self)
+        self.moving = False
+        self.x = 0.0
+        self.y = 0.0
+        self.clearPath()
+        self.moveTimer = eTimer()
+        self.moveTimer.callback.append(self.doMove)
 
-		# TODO: get real values
-		self.x = 0.0
-		self.y = 0.0
+    def clearPath(self, repeated = False):
+        if self.moving:
+            self.moving = False
+            self.moveTimer.stop()
+        self.path = []
+        self.currDest = 0
+        self.repeated = repeated
 
-		self.clearPath()
+    def addMovePoint(self, x, y, time = 20):
+        self.path.append((x, y, time))
 
-		self.moveTimer = eTimer()
-		self.moveTimer.callback.append(self.doMove)
+    def moveTo(self, x, y, time = 20):
+        self.clearPath()
+        self.addMovePoint(x, y, time)
 
-	def clearPath(self, repeated = False):
-		if self.moving:
-			self.moving = False
-			self.moveTimer.stop()
+    def startMoving(self):
+        if not self.moving:
+            self.time = self.path[self.currDest][2]
+            self.stepX = (self.path[self.currDest][0] - self.x) / float(self.time)
+            self.stepY = (self.path[self.currDest][1] - self.y) / float(self.time)
+            self.moving = True
+            self.moveTimer.start(100)
 
-		self.path = []
-		self.currDest = 0
-		self.repeated = repeated
+    def stopMoving(self):
+        self.moving = False
+        self.moveTimer.stop()
 
-	def addMovePoint(self, x, y, time = 20):
-		self.path.append((x, y, time))
+    def doMove(self):
+        self.x += self.stepX
+        self.y += self.stepY
+        self.time -= 1
+        try:
+            self.move(int(self.x), int(self.y))
+        except:
+            self.stopMoving()
 
-	def moveTo(self, x, y, time = 20):
-		self.clearPath()
-		self.addMovePoint(x, y, time)
+        if self.time == 0:
+            self.currDest += 1
+            self.moveTimer.stop()
+            self.moving = False
+            if self.currDest >= len(self.path):
+                if self.repeated:
+                    self.currDest = 0
+                    self.moving = False
+                    self.startMoving()
+            else:
+                self.moving = False
+                self.startMoving()
 
-	def startMoving(self):
-		if not self.moving:
-			self.time = self.path[self.currDest][2]
-			self.stepX = (self.path[self.currDest][0] - self.x) / float(self.time)
-			self.stepY = (self.path[self.currDest][1] - self.y) / float(self.time)
-
-			self.moving = True
-			self.moveTimer.start(100)
-
-	def stopMoving(self):
-		self.moving = False
-		self.moveTimer.stop()
-
-	def doMove(self):
-		self.x += self.stepX
-		self.y += self.stepY
-		self.time -= 1
-		try:
-			self.move(int(self.x), int(self.y))
-		except: # moving not possible... widget not there any more... stop moving
-			self.stopMoving()
-
-		if self.time == 0:
-			self.currDest += 1
-			self.moveTimer.stop()
-			self.moving = False
-			if self.currDest >= len(self.path): # end of path
-				if self.repeated:
-					self.currDest = 0
-					self.moving = False
-					self.startMoving()
-			else:
-				self.moving = False
-				self.startMoving()
 
 class MultiPixmap(Pixmap):
-	def __init__(self):
-		Pixmap.__init__(self)
-		self.pixmaps = []
 
-	def applySkin(self, desktop, screen):
-		if self.skinAttributes is not None:
-			skin_path_prefix = getattr(screen, "skin_path", path)
-			pixmap = None
-			attribs = [ ]
-			for (attrib, value) in self.skinAttributes:
-				if attrib == "pixmaps":
-					pixmaps = value.split(',')
-					for p in pixmaps:
-						pngfile = resolveFilename(SCOPE_CURRENT_SKIN, p, path_prefix=skin_path_prefix)
-						if not fileExists(pngfile) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, p, path_prefix=skin_path_prefix)):
-							pngfile = resolveFilename(SCOPE_CURRENT_LCDSKIN, p, path_prefix=skin_path_prefix)
-						if path.exists(pngfile):
-							self.pixmaps.append(loadPixmap(pngfile, desktop))
-					if not pixmap:
-						pixmap = resolveFilename(SCOPE_CURRENT_SKIN, pixmaps[0], path_prefix=skin_path_prefix)
-						if not fileExists(pixmap) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, pixmaps[0], path_prefix=skin_path_prefix)):
-							pixmap = resolveFilename(SCOPE_CURRENT_LCDSKIN, pixmaps[0], path_prefix=skin_path_prefix)
-				elif attrib == "pixmap":
-					pixmap = resolveFilename(SCOPE_CURRENT_SKIN, value, path_prefix=skin_path_prefix)
-					if not fileExists(pixmap) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, value, path_prefix=skin_path_prefix)):
-						pixmap = resolveFilename(SCOPE_CURRENT_LCDSKIN, value, path_prefix=skin_path_prefix)
-				else:
-					attribs.append((attrib,value))
-			if pixmap:
-				attribs.append(("pixmap", pixmap))
-			self.skinAttributes = attribs
-		return GUIComponent.applySkin(self, desktop, screen)
+    def __init__(self):
+        Pixmap.__init__(self)
+        self.pixmaps = []
 
-	def setPixmapNum(self, x):
-		if self.instance:
-			if len(self.pixmaps) > x:
-				self.instance.setPixmap(self.pixmaps[x])
-			else:
-				print "setPixmapNum(%d) failed! defined pixmaps:" % x, self.pixmaps
+    def applySkin(self, desktop, screen):
+        if self.skinAttributes is not None:
+            skin_path_prefix = getattr(screen, 'skin_path', path)
+            pixmap = None
+            attribs = []
+            for attrib, value in self.skinAttributes:
+                if attrib == 'pixmaps':
+                    pixmaps = value.split(',')
+                    for p in pixmaps:
+                        pngfile = resolveFilename(SCOPE_CURRENT_SKIN, p, path_prefix=skin_path_prefix)
+                        if not fileExists(pngfile) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, p, path_prefix=skin_path_prefix)):
+                            pngfile = resolveFilename(SCOPE_CURRENT_LCDSKIN, p, path_prefix=skin_path_prefix)
+                        if path.exists(pngfile):
+                            self.pixmaps.append(loadPixmap(pngfile, desktop))
+
+                    if not pixmap:
+                        pixmap = resolveFilename(SCOPE_CURRENT_SKIN, pixmaps[0], path_prefix=skin_path_prefix)
+                        if not fileExists(pixmap) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, pixmaps[0], path_prefix=skin_path_prefix)):
+                            pixmap = resolveFilename(SCOPE_CURRENT_LCDSKIN, pixmaps[0], path_prefix=skin_path_prefix)
+                elif attrib == 'pixmap':
+                    pixmap = resolveFilename(SCOPE_CURRENT_SKIN, value, path_prefix=skin_path_prefix)
+                    if not fileExists(pixmap) and fileExists(resolveFilename(SCOPE_CURRENT_LCDSKIN, value, path_prefix=skin_path_prefix)):
+                        pixmap = resolveFilename(SCOPE_CURRENT_LCDSKIN, value, path_prefix=skin_path_prefix)
+                else:
+                    attribs.append((attrib, value))
+
+            if pixmap:
+                attribs.append(('pixmap', pixmap))
+            self.skinAttributes = attribs
+        return GUIComponent.applySkin(self, desktop, screen)
+
+    def setPixmapNum(self, x):
+        if self.instance:
+            if len(self.pixmaps) > x:
+                self.instance.setPixmap(self.pixmaps[x])
+            else:
+                print 'setPixmapNum(%d) failed! defined pixmaps:' % x, self.pixmaps

@@ -2,43 +2,42 @@ from Source import Source
 from enigma import eServiceCenter, eServiceReference
 
 class ServiceList(Source):
-	def __init__(self, root, command_func = None, validate_commands = True):
-		Source.__init__(self)
-		self.root = root
-		self.command_func = command_func
-		self.validate_commands = validate_commands
 
-	def getServicesAsList(self, format = "SN"):
-		services = self.getServiceList()
-		return services and services.getContent(format, True)
+    def __init__(self, root, command_func = None, validate_commands = True):
+        Source.__init__(self)
+        self.root = root
+        self.command_func = command_func
+        self.validate_commands = validate_commands
 
-	def getServiceList(self):
-		serviceHandler = eServiceCenter.getInstance()
-		return serviceHandler.list(self.root)
+    def getServicesAsList(self, format = 'SN'):
+        services = self.getServiceList()
+        return services and services.getContent(format, True)
 
-	def validateReference(self, ref):
-		return ref in self.getServicesAsList("S")
+    def getServiceList(self):
+        serviceHandler = eServiceCenter.getInstance()
+        return serviceHandler.list(self.root)
 
-	list = property(getServicesAsList)
-	lut = {"Reference": 0, "Name": 1}
+    def validateReference(self, ref):
+        return ref in self.getServicesAsList('S')
 
-	def getRoot(self):
-		return self.__root
+    list = property(getServicesAsList)
+    lut = {'Reference': 0,
+     'Name': 1}
 
-	def setRoot(self, root):
-		assert isinstance(root, eServiceReference)
-		self.__root = root
-		self.changed()
+    def getRoot(self):
+        return self.__root
 
-	root = property(getRoot, setRoot)
+    def setRoot(self, root):
+        self.__root = root
+        self.changed()
 
-	def handleCommand(self, cmd):
-		print "ServiceList handle command"
+    root = property(getRoot, setRoot)
 
-		if self.validate_commands and not self.validateReference(cmd):
-			print "Service reference did not validate!"
-			return
-
-		ref = eServiceReference(cmd)
-		if self.command_func:
-			self.command_func(ref)
+    def handleCommand(self, cmd):
+        print 'ServiceList handle command'
+        if self.validate_commands and not self.validateReference(cmd):
+            print 'Service reference did not validate!'
+            return
+        ref = eServiceReference(cmd)
+        if self.command_func:
+            self.command_func(ref)

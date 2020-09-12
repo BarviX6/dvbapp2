@@ -1,7 +1,9 @@
 <!--suppress XmlUnboundNsPrefix -->
 <setupxml>
 	<setup key="time" title="Time settings">
-		<item level="0" text="Timezone" description="Setup your timezone.">config.timezone.val</item>
+		<item level="0" text="Enable Geolocation" description="Configure if you like detect online your timezone.">config.misc.enableGeolocation</item>
+		<item level="0" text="Time zone area" description="Select your time zone area or region.">config.timezone.area</item>
+		<item level="0" text="Time zone" description="Select the time zone within the area or region.">config.timezone.val</item>
 		<item level="0" text="Sync time using" description="Synchronize systemtime using transponder or internet.">config.misc.SyncTimeUsing</item>
 		<item level="0" text="NTP server" description="Configure your NTP server.">config.misc.NTPserver</item>
 		<item level="0" text="Sync NTP every (minutes)" description="Setup network time synchronization interval." requires="config.misc.SyncTimeUsing" >config.misc.useNTPminutes</item>
@@ -171,7 +173,6 @@
 		<item level="2" text="Enable OpenTV EPG" description="Use OpenTV EPG information when it is available.">config.epg.opentv</item>
 		<item level="2" text="Maximum number of days in EPG" description="Use for load only x days in EPG">config.epg.maxdays</item>
 		<item level="2" text="Maintain old EPG data for" description="Configure for how many minutes finished events should remain visible in the EPG. Useful when you need information about an event which has just finished, or has been delayed.">config.epg.histminutes</item>
-		<item level="2" text="Restart GUI after download EPG?" description="Configure if restart GUI when EPG is downloaded for saved data">config.epg.restartgui</item>
 		<item level="2" text="Include EIT in http streams" description="When enabled, EIT data will be included in http streams. This allows a client receiver to show EPG.">config.streaming.stream_eit</item>
 		<item level="2" text="Include AIT in http streams" description="When enabled, AIT data will be included in http streams. This allows a client receiver to use HbbTV.">config.streaming.stream_ait</item>
 		<item level="2" text="Country for EPG event rating information" description="Choose a country scheme for decoding rating information in EPG events.">config.misc.epgratingcountry</item>
