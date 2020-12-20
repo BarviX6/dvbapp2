@@ -8,6 +8,8 @@ from Components.config import config, ConfigBoolean, configfile
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import resolveFilename, SCOPE_SKIN, SCOPE_ACTIVE_SKIN
 from Tools.HardwareInfo import HardwareInfo
+from enigma import evfd
+
 config.misc.showtestcard = ConfigBoolean(default=False)
 has_rca = False
 has_dvi = False
@@ -56,6 +58,7 @@ class VideoWizard(WizardLanguage, Rc):
         config.misc.videowizardenabled.value = 0
         config.misc.videowizardenabled.save()
         configfile.save()
+        evfd.getInstance().vfd_write_string("                ")		
 
     def listInputChannels(self):
         hw_type = HardwareInfo().get_device_name()

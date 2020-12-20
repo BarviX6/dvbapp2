@@ -954,6 +954,8 @@ lib/python/Plugins/Extensions/spaTeam/locale/Makefile
 lib/python/Plugins/Extensions/spaTeam/locale/es/Makefile
 lib/python/Plugins/Extensions/spaTeam/locale/es/LC_MESSAGES/Makefile
 lib/python/Plugins/Extensions/spaTeam/meta/Makefile
+lib/python/Plugins/Extensions/sparkVFD/Makefile
+lib/python/Plugins/Extensions/sparkVFD/meta/Makefile
 lib/python/Plugins/SystemPlugins/Makefile
 lib/python/Plugins/SystemPlugins/AnimationSetup/Makefile
 lib/python/Plugins/SystemPlugins/CableScan/Makefile
